@@ -15,10 +15,10 @@ if [[ ${EUID} -ne 0 ]]; then
 fi
 
 mkdir -p work/rootfs
-mountchroot work/rootfs
+setup-chroot -m work/rootfs
 pan -A infra root=work/rootfs
-copypkgs work/rootfs/pkg/arc/ infra
-umountchroot work/rootfs
+copy-pkgs work/rootfs/pkg/arc/ infra
+setup-chroot -u work/rootfs
 
 mkdir -p work/LiveOS
 truncate -s 32G work/LiveOS/rootfs.img
