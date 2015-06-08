@@ -1,0 +1,39 @@
+Installation
+    Partitioning:
+    fdisk, gdisk, parted
+
+    Mount partition_
+    mount /mnt /dev/sdXX
+
+    Packages:
+    pan -A infra root=/mnt
+    copy-pkgs /mnt/pkg/arc/ infra
+
+    Optional:
+    pan -A x11 supra media gnome misc root=/mnt
+
+    Grub(bios):
+    grub-install --target=i386-pc --boot-directory=/mnt/boot /dev/sdX
+
+Configuration
+    enter-chroot /mnt
+
+    User:
+    useradd -m -G users,audio,video,wheel <username>
+
+    Hostname:
+    echo "gnurama" > /etc/hostname
+
+    Keymap:
+    echo "KEYMAP=uk" > /etc/vconsole.conf
+
+    Locale:
+    Default locale is en_GB, if you want to change locale do:
+
+    echo "LANG=en_US.UTF-8" > /etc/locale.conf
+
+    Also comment out preferred locale in /etc/locale.gen and run:
+    locale-gen
+
+    Time & Date:
+    ln -s /usr/share/zoneinfo/Europe/Stockholm /etc/localtime

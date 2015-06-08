@@ -20,6 +20,14 @@ pan -A infra root=work/rootfs
 copy-pkgs work/rootfs/pkg/arc/ infra
 setup-chroot -u work/rootfs
 
+mkdir -p work/rootfs/etc/systemd/system/getty@tty1.service.d
+cp /usr/share/liveiso/systemd/override.conf work/rootfs/etc/systemd/system/getty@tty1.service.d
+chroot work/rootfs /bin/sh -c "ln -s /usr/share/zoneinfo/Europe/Stockholm /etc/localtime"
+chroot work/rootfs /bin/sh -c "systemctl enable dhcpcd"
+chroot work/rootfs /bin/sh -c "echo \"For installation instructions,\" >> /etc/motd"
+chroot work/rootfs /bin/sh -c "echo \"read the file /root/install.txt\" >> /etc/motd"
+cp /usr/share/liveiso/install.txt work/rootfs/root
+
 mkdir -p work/LiveOS
 truncate -s 32G work/LiveOS/rootfs.img
 mkfs.ext4 -O ^has_journal,^resize_inode -E lazy_itable_init=0 -m 0 -F work/LiveOS/rootfs.img
@@ -64,9 +72,7 @@ cp /usr/share/liveiso/efiboot/uefi-shell-v2.conf work/iso/loader/entries
 sed "s|GNURAMALINUX|$iso_label|g" \
     /usr/share/liveiso/efiboot/liveiso-usb.conf > work/iso/loader/entries/liveiso.conf
 
-# EFI Shell 2.0 for UEFI 2.3+ ( http://sourceforge.net/apps/mediawiki/tianocore/index.php?title=UEFI_Shell )
 curl -o work/iso/EFI/shellx64_v2.efi https://svn.code.sf.net/p/edk2/code/trunk/edk2/ShellBinPkg/UefiShell/X64/Shell.efi
-# EFI Shell 1.0 for non UEFI 2.3+ ( http://sourceforge.net/apps/mediawiki/tianocore/index.php?title=Efi-shell )
 curl -o work/iso/EFI/shellx64_v1.efi https://svn.code.sf.net/p/edk2/code/trunk/edk2/EdkShellBinPkg/FullShell/X64/Shell_Full.efi
 
 mkdir -p work/iso/EFI/liveiso

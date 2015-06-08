@@ -23,3 +23,8 @@ install -v -m644 syslinux.cfg $root/usr/share/liveiso/syslinux
 
 mkdir -p $root/usr/share/liveiso/isolinux
 install -v -m644 isolinux.cfg $root/usr/share/liveiso/isolinux
+
+mkdir -p $root/usr/share/liveiso/systemd
+install -v -m644 override.conf $root/usr/share/liveiso/systemd
+
+install -v -m644 install.txt $root/usr/share/liveiso
