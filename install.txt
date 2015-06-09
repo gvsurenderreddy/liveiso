@@ -1,39 +1,46 @@
-Installation
-    Partitioning:
-    fdisk, gdisk, parted
+## Installation ##
 
-    Mount partition_
-    mount /mnt /dev/sdXX
+  Partition the disk by using fdisk, gdisk or parted.
+    fdisk /dev/sdX
 
-    Packages:
+  Mount the partition:
+    mount /dev/sdXX /mnt
+
+  Install the base packages:
     pan -A infra root=/mnt
-    copy-pkgs /mnt/pkg/arc/ infra
 
-    Optional:
+  Install additional groups if needed:
     pan -A x11 supra media gnome misc root=/mnt
 
-    Grub(bios):
+  Setup the grub bootloader:
     grub-install --target=i386-pc --boot-directory=/mnt/boot /dev/sdX
 
-Configuration
+## Configuration ##
+
+  Change root to /mnt directory:
     enter-chroot /mnt
 
-    User:
+  Set the root password:
+    passwd
+
+  Add a user:
     useradd -m -G users,audio,video,wheel <username>
+    passwd <username>
 
-    Hostname:
-    echo "gnurama" > /etc/hostname
+  Set the hostname:
+    echo "<hostname>" > /etc/hostname
 
-    Keymap:
-    echo "KEYMAP=uk" > /etc/vconsole.conf
+  Set the keymap:
+    echo "KEYMAP=us" > /etc/vconsole.conf
 
-    Locale:
-    Default locale is en_GB, if you want to change locale do:
-
+  Set the locale:
     echo "LANG=en_US.UTF-8" > /etc/locale.conf
 
-    Also comment out preferred locale in /etc/locale.gen and run:
+  Uncomment preferred locale in /etc/locale.gen and run:
     locale-gen
 
-    Time & Date:
-    ln -s /usr/share/zoneinfo/Europe/Stockholm /etc/localtime
+  Set the time zone:
+    ln -s /usr/share/zoneinfo/<zone>/<subzone> /etc/localtime
+
+  Generate the grub configuration:
+    grub-mkconfig -o /boot/grub/grub.cfg

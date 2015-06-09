@@ -17,14 +17,17 @@ fi
 mkdir -p work/rootfs
 setup-chroot -m work/rootfs
 pan -A infra root=work/rootfs
-copy-pkgs work/rootfs/pkg/arc/ infra
+pan -a gummiboot syslinux dosfstools efibootmgr efivar mtools \
+	gptfdisk parted prebootloader btrfs-progs root=work/rootfs
+copy-pkgs infra work/rootfs/pkg/arc
 setup-chroot -u work/rootfs
 
 mkdir -p work/rootfs/etc/systemd/system/getty@tty1.service.d
 cp /usr/share/liveiso/systemd/override.conf work/rootfs/etc/systemd/system/getty@tty1.service.d
+chroot work/rootfs /bin/sh -c "echo \"KEYMAP=uk\" > /etc/vconsole.conf"
 chroot work/rootfs /bin/sh -c "ln -s /usr/share/zoneinfo/Europe/Stockholm /etc/localtime"
 chroot work/rootfs /bin/sh -c "systemctl enable dhcpcd"
-chroot work/rootfs /bin/sh -c "echo \"For installation instructions,\" >> /etc/motd"
+chroot work/rootfs /bin/sh -c "echo \"For the installation instructions,\" >> /etc/motd"
 chroot work/rootfs /bin/sh -c "echo \"read the file /root/install.txt\" >> /etc/motd"
 cp /usr/share/liveiso/install.txt work/rootfs/root
 
