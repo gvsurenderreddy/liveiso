@@ -6,6 +6,9 @@
   Mount the partition:
     mount /dev/sdXX /mnt
 
+  Setup the chroot environment:
+    setup-chroot -m /mnt
+
   Install the base packages:
     pan -A infra root=/mnt
 
