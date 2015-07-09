@@ -13,6 +13,11 @@
     pan -A infra root=/mnt
 
   Install additional groups if needed:
+    curl -L -o gnome-2015.07.tar.xz http://sourceforge.net/projects/gnurama/files/pkg/gnome-2015.07.tar.xz
+
+    tar -xf gnome-2015.07.tar.xz
+    mv gnome-2015.07/* /pkg/arc
+
     pan -A x11 supra gnome root=/mnt
 
   Setup the grub bootloader:
