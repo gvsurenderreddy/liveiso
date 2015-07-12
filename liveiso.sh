@@ -94,7 +94,7 @@ cp work/iso/LiveOS/boot/initramfs work/efiboot/EFI/liveiso
 mkdir -p work/efiboot/EFI/boot
 cp /usr/lib/prebootloader/PreLoader.efi work/efiboot/EFI/boot/bootx64.efi
 cp /usr/lib/prebootloader/HashTool.efi work/efiboot/EFI/boot
-cp /usr/lib/gummiboot/gummibootx64.efi work/efiboot/EFI/boot/loader.efi
+cp /usr/lib/systemd/boot/efi/systemd-bootx64.efi work/efiboot/EFI/boot/loader.efi
 
 mkdir -p work/efiboot/loader/entries
 cp /usr/share/liveiso/efiboot/loader.conf work/efiboot/loader
