@@ -17,7 +17,7 @@ fi
 mkdir -p work/rootfs
 setup-chroot -m work/rootfs
 pan -A infra root=work/rootfs
-pan -a gummiboot syslinux mtools gptfdisk parted prebootloader btrfs-progs root=work/rootfs
+pan -a syslinux mtools gptfdisk parted prebootloader btrfs-progs root=work/rootfs
 setup-chroot -u work/rootfs
 copy-pkgs infra work/rootfs/pkg/arc
 copy-pkgs x11 work/rootfs/pkg/arc
