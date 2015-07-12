@@ -68,7 +68,7 @@ dracut -N -L 3 --add "dmsquash-live pollcdrom" work/iso/LiveOS/boot/initramfs $k
 mkdir -p work/iso/EFI/boot
 cp /usr/lib/prebootloader/PreLoader.efi work/iso/EFI/boot/bootx64.efi
 cp /usr/lib/prebootloader/HashTool.efi work/iso/EFI/boot
-cp /usr/lib/gummiboot/gummibootx64.efi work/iso/EFI/boot/loader.efi
+cp /usr/lib/systemd/boot/efi/systemd-bootx64.efi work/iso/EFI/boot/loader.efi
 
 mkdir -p work/iso/loader/entries
 cp /usr/share/liveiso/efiboot/loader.conf work/iso/loader
