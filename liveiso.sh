@@ -33,20 +33,20 @@ chroot work/rootfs /bin/sh -c "echo \"For the installation instructions,\" >> /e
 chroot work/rootfs /bin/sh -c "echo \"read the file /root/install.txt\" >> /etc/motd"
 cp /usr/share/liveiso/install.txt work/rootfs/root
 
-mkdir -p work/LiveOS
-truncate -s 32G work/LiveOS/rootfs.img
-mkfs.ext4 -O ^has_journal,^resize_inode -E lazy_itable_init=0 -m 0 -F work/LiveOS/rootfs.img
-tune2fs -c 0 -i 0 work/LiveOS/rootfs.img &> /dev/null
+mkdir -p work/live/LiveOS
+truncate -s 32G work/live/LiveOS/rootfs.img
+mkfs.ext4 -O ^has_journal,^resize_inode -E lazy_itable_init=0 -m 0 -F work/live/LiveOS/rootfs.img
+tune2fs -c 0 -i 0 work/live/LiveOS/rootfs.img &> /dev/null
 
 mkdir -p work/mnt/rootfs
-mount work/LiveOS/rootfs.img work/mnt/rootfs
+mount work/live/LiveOS/rootfs.img work/mnt/rootfs
 cp -aT work/rootfs/ work/mnt/rootfs
 umount -d work/mnt/rootfs
-rmdir work/mnt/rootfs
+rm -r work/mnt
 
 mkdir -p work/iso/LiveOS
-mksquashfs work/LiveOS work/iso/LiveOS/squashfs.img -noappend -comp xz -no-progress -keep-as-directory
-rm -r work/LiveOS
+mksquashfs work/live work/iso/LiveOS/squashfs.img -noappend -comp xz -no-progress
+rm -r work/live
 
 mkdir work/iso/isolinux
 cp /usr/lib/syslinux/bios/isolinux.bin work/iso/isolinux
