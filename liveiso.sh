@@ -17,7 +17,7 @@ fi
 mkdir -p work/rootfs
 setup-chroot -m work/rootfs
 pan -A infra root=work/rootfs
-pan -a syslinux mtools gptfdisk parted prebootloader btrfs-progs root=work/rootfs
+pan -a syslinux mtools gptfdisk parted shim btrfs-progs root=work/rootfs
 setup-chroot -u work/rootfs
 copy-pkgs infra work/rootfs/pkg/arc
 copy-pkgs x11 work/rootfs/pkg/arc
@@ -65,46 +65,25 @@ sed "s|GNURAMALINUX|$iso_label|g" \
 cp /boot/vmlinuz work/iso/LiveOS/boot
 dracut -N -L 3 --add "dmsquash-live pollcdrom" work/iso/LiveOS/boot/initramfs $kver
 
-mkdir -p work/iso/EFI/boot
-cp /usr/lib/prebootloader/PreLoader.efi work/iso/EFI/boot/bootx64.efi
-cp /usr/lib/prebootloader/HashTool.efi work/iso/EFI/boot
-cp /usr/lib/systemd/boot/efi/systemd-bootx64.efi work/iso/EFI/boot/loader.efi
-
-mkdir -p work/iso/loader/entries
-cp /usr/share/liveiso/efiboot/loader.conf work/iso/loader
-cp /usr/share/liveiso/efiboot/uefi-shell-v1.conf work/iso/loader/entries
-cp /usr/share/liveiso/efiboot/uefi-shell-v2.conf work/iso/loader/entries
+mkdir -p work/iso/EFI/{boot,fonts}
+cp /usr/lib/shim/shim.efi work/iso/EFI/boot/bootx64.efi
+cp /boot/efi/EFI/gnurama/grubx64.efi work/iso/EFI/boot
+cp /boot/efi/EFI/gnurama/fonts/unicode.pf2 work/iso/EFI/fonts
 sed "s|GNURAMALINUX|$iso_label|g" \
-    /usr/share/liveiso/efiboot/liveiso-usb.conf > work/iso/loader/entries/liveiso.conf
+    /usr/share/liveiso/grub/grub.cfg > work/iso/EFI/boot/grub.cfg
 
-curl -o work/iso/EFI/shellx64_v2.efi https://svn.code.sf.net/p/edk2/code/trunk/edk2/ShellBinPkg/UefiShell/X64/Shell.efi
-curl -o work/iso/EFI/shellx64_v1.efi https://svn.code.sf.net/p/edk2/code/trunk/edk2/EdkShellBinPkg/FullShell/X64/Shell_Full.efi
-
-mkdir -p work/iso/EFI/liveiso
-truncate -s 41M work/iso/EFI/liveiso/efiboot.img
-mkdosfs -n LIVEISO_EFI work/iso/EFI/liveiso/efiboot.img
+truncate -s 31M work/iso/isolinux/efiboot.img
+mkdosfs -n LIVEISO_EFI work/iso/isolinux/efiboot.img
 
 mkdir -p work/efiboot
-mount work/iso/EFI/liveiso/efiboot.img work/efiboot
+mount work/iso/isolinux/efiboot.img work/efiboot
 
-mkdir -p work/efiboot/EFI/liveiso
-cp work/iso/LiveOS/boot/vmlinuz work/efiboot/EFI/liveiso
-cp work/iso/LiveOS/boot/initramfs work/efiboot/EFI/liveiso
-
-mkdir -p work/efiboot/EFI/boot
-cp /usr/lib/prebootloader/PreLoader.efi work/efiboot/EFI/boot/bootx64.efi
-cp /usr/lib/prebootloader/HashTool.efi work/efiboot/EFI/boot
-cp /usr/lib/systemd/boot/efi/systemd-bootx64.efi work/efiboot/EFI/boot/loader.efi
-
-mkdir -p work/efiboot/loader/entries
-cp /usr/share/liveiso/efiboot/loader.conf work/efiboot/loader
-cp /usr/share/liveiso/efiboot/uefi-shell-v1.conf work/efiboot/loader/entries
-cp /usr/share/liveiso/efiboot/uefi-shell-v2.conf work/efiboot/loader/entries
+mkdir -p work/efiboot/EFI/{boot,fonts}
+cp /usr/lib/shim/shim.efi work/efiboot/EFI/boot/bootx64.efi
+cp /boot/efi/EFI/gnurama/grubx64.efi work/efiboot/EFI/boot
+cp /boot/efi/EFI/gnurama/fonts/unicode.pf2 work/efiboot/EFI/fonts
 sed "s|GNURAMALINUX|$iso_label|g" \
-    /usr/share/liveiso/efiboot/liveiso-cd.conf > work/efiboot/loader/entries/liveiso.conf
-
-cp work/iso/EFI/shellx64_v2.efi work/efiboot/EFI
-cp work/iso/EFI/shellx64_v1.efi work/efiboot/EFI
+    /usr/share/liveiso/grub/grub.cfg > work/efiboot/EFI/boot/grub.cfg
 
 umount -d work/efiboot
 
@@ -120,7 +99,7 @@ xorriso -as mkisofs \
         -no-emul-boot -boot-load-size 4 -boot-info-table \
         -isohybrid-mbr work/iso/isolinux/isohdpfx.bin \
         -eltorito-alt-boot \
-        -e EFI/liveiso/efiboot.img \
+        -e isolinux/efiboot.img \
         -no-emul-boot \
         -isohybrid-gpt-basdat \
         -output "$iso_name" \
