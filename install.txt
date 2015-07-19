@@ -23,6 +23,9 @@
   Setup the grub bootloader:
     grub-install --target=i386-pc --boot-directory=/mnt/boot /dev/sdX
 
+  Copy resolv.conf to /mnt directory:
+    cp /etc/resolv.conf /mnt/etc
+
 ## Configuration ##
 
   Change root to /mnt directory:
@@ -52,3 +55,6 @@
 
   Generate the grub configuration:
     grub-mkconfig -o /boot/grub/grub.cfg
+
+  Enable network manager(dhcpcd/NetworkManager):
+    systemctl enable NetworkManager
