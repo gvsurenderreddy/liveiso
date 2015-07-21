@@ -13,7 +13,7 @@ done
 mkdir -p $root/usr/bin
 install -v -m755 liveiso.sh $root/usr/bin/liveiso
 
-for i in grub syslinux isolinux; do
+for i in grub isolinux; do
 	mkdir -p $root/usr/share/liveiso/$i
 	install -v -m644 $i.cfg $root/usr/share/liveiso/$i
 done

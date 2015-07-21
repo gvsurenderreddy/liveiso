@@ -52,25 +52,14 @@ mkdir work/iso/isolinux
 cp /usr/lib/syslinux/bios/isolinux.bin work/iso/isolinux
 cp /usr/lib/syslinux/bios/isohdpfx.bin work/iso/isolinux
 cp /usr/lib/syslinux/bios/ldlinux.c32 work/iso/isolinux
-cp /usr/share/liveiso/isolinux/isolinux.cfg work/iso/isolinux
-
-mkdir -p work/iso/LiveOS/boot/syslinux
-cp /usr/lib/syslinux/bios/ldlinux.c32 work/iso/LiveOS/boot/syslinux
-cp /usr/lib/syslinux/bios/menu.c32 work/iso/LiveOS/boot/syslinux
-cp /usr/lib/syslinux/bios/libutil.c32 work/iso/LiveOS/boot/syslinux
-cp /usr/share/liveiso/syslinux/syslinux.cfg work/iso/LiveOS/boot/syslinux
+cp /usr/lib/syslinux/bios/vesamenu.c32 work/iso/isolinux
+cp /usr/lib/syslinux/bios/libcom32.c32 work/iso/isolinux
+cp /usr/lib/syslinux/bios/libutil.c32 work/iso/isolinux
 sed "s|GNURAMALINUX|$iso_label|g" \
-    /usr/share/liveiso/syslinux/syslinux.cfg > work/iso/LiveOS/boot/syslinux/syslinux.cfg
+    /usr/share/liveiso/isolinux/isolinux.cfg > work/iso/isolinux/isolinux.cfg
 
-cp /boot/vmlinuz work/iso/LiveOS/boot
-dracut -N -L 3 --add "dmsquash-live pollcdrom" work/iso/LiveOS/boot/initramfs $kver
-
-mkdir -p work/iso/EFI/{boot,fonts}
-cp /usr/lib/shim/shim.efi work/iso/EFI/boot/bootx64.efi
-cp /boot/efi/EFI/gnurama/grubx64.efi work/iso/EFI/boot
-cp /boot/efi/EFI/gnurama/fonts/unicode.pf2 work/iso/EFI/fonts
-sed "s|GNURAMALINUX|$iso_label|g" \
-    /usr/share/liveiso/grub/grub.cfg > work/iso/EFI/boot/grub.cfg
+cp /boot/vmlinuz work/iso/isolinux
+dracut -N -L 3 --add "dmsquash-live pollcdrom" work/iso/isolinux/initramfs $kver
 
 truncate -s 31M work/iso/isolinux/efiboot.img
 mkdosfs -n LIVEISO_EFI work/iso/isolinux/efiboot.img
@@ -79,13 +68,18 @@ mkdir -p work/efiboot
 mount work/iso/isolinux/efiboot.img work/efiboot
 
 mkdir -p work/efiboot/EFI/{boot,fonts}
-cp /usr/lib/shim/shim.efi work/efiboot/EFI/boot/bootx64.efi
-cp /boot/efi/EFI/gnurama/grubx64.efi work/efiboot/EFI/boot
+cp /boot/efi/EFI/gnurama/{boot,grub}x64.efi work/efiboot/EFI/boot
 cp /boot/efi/EFI/gnurama/fonts/unicode.pf2 work/efiboot/EFI/fonts
 sed "s|GNURAMALINUX|$iso_label|g" \
     /usr/share/liveiso/grub/grub.cfg > work/efiboot/EFI/boot/grub.cfg
 
 umount -d work/efiboot
+
+mkdir -p work/iso/EFI/{boot,fonts}
+cp /boot/efi/EFI/gnurama/{boot,grub}x64.efi work/iso/EFI/boot
+cp /boot/efi/EFI/gnurama/fonts/unicode.pf2 work/iso/EFI/fonts
+sed "s|GNURAMALINUX|$iso_label|g" \
+    /usr/share/liveiso/grub/grub.cfg > work/iso/EFI/boot/grub.cfg
 
 xorriso -as mkisofs \
         -iso-level 3 \
