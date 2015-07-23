@@ -58,3 +58,4 @@
 
   Enable network manager(dhcpcd/NetworkManager):
     systemctl enable NetworkManager
+  
