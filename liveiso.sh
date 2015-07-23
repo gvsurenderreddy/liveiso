@@ -16,22 +16,22 @@ fi
 
 mkdir -p work/rootfs
 setup-chroot -m work/rootfs
-#pan -A infra root=work/rootfs
-#pan -a syslinux mtools gptfdisk parted shim btrfs-progs root=work/rootfs
+pan -A infra root=work/rootfs
+pan -a syslinux mtools gptfdisk parted shim btrfs-progs root=work/rootfs
 setup-chroot -u work/rootfs
-#copy-pkgs infra work/rootfs/pkg/arc
-#copy-pkgs x11 work/rootfs/pkg/arc
-#copy-pkgs supra work/rootfs/pkg/arc
-#cp -a /pkg/rcs work/rootfs/pkg/rcs
+copy-pkgs infra work/rootfs/pkg/arc
+copy-pkgs x11 work/rootfs/pkg/arc
+copy-pkgs supra work/rootfs/pkg/arc
+cp -a /pkg/rcs work/rootfs/pkg/rcs
 
-#mkdir -p work/rootfs/etc/systemd/system/getty@tty1.service.d
-#cp /usr/share/liveiso/systemd/override.conf work/rootfs/etc/systemd/system/getty@tty1.service.d
-#chroot work/rootfs /bin/sh -c "echo \"KEYMAP=uk\" > /etc/vconsole.conf"
-#chroot work/rootfs /bin/sh -c "ln -s /usr/share/zoneinfo/Europe/Stockholm /etc/localtime"
-#chroot work/rootfs /bin/sh -c "systemctl enable dhcpcd"
-#chroot work/rootfs /bin/sh -c "echo \"For the installation instructions,\" >> /etc/motd"
-#chroot work/rootfs /bin/sh -c "echo \"read the file /root/install.txt\" >> /etc/motd"
-#cp /usr/share/liveiso/install.txt work/rootfs/root
+mkdir -p work/rootfs/etc/systemd/system/getty@tty1.service.d
+cp /usr/share/liveiso/systemd/override.conf work/rootfs/etc/systemd/system/getty@tty1.service.d
+chroot work/rootfs /bin/sh -c "echo \"KEYMAP=uk\" > /etc/vconsole.conf"
+chroot work/rootfs /bin/sh -c "ln -s /usr/share/zoneinfo/Europe/Stockholm /etc/localtime"
+chroot work/rootfs /bin/sh -c "systemctl enable dhcpcd"
+chroot work/rootfs /bin/sh -c "echo \"For the installation instructions,\" >> /etc/motd"
+chroot work/rootfs /bin/sh -c "echo \"read the file /root/install.txt\" >> /etc/motd"
+cp /usr/share/liveiso/install.txt work/rootfs/root
 
 mkdir -p work/live/LiveOS
 truncate -s 32G work/live/LiveOS/rootfs.img
