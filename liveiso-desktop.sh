@@ -16,8 +16,9 @@ fi
 
 mkdir -p work/rootfs
 setup-chroot -m work/rootfs
-pan -A infra x11 supra gnome root=work/rootfs
-pan -a enlightenment terminology firefox mesa-demos syslinux mtools gptfdisk parted shim btrfs-progs root=work/rootfs
+pan -A base x11 gnome gnome-extra rootdir=work/rootfs
+pan -a enlightenment terminology firefox mesa-demos syslinux mtools \
+gptfdisk parted shim btrfs-progs iw wpa_supplicant rootdir=work/rootfs
 setup-chroot -u work/rootfs
 
 chroot work/rootfs /bin/sh -c "echo 'root:root' | chpasswd"

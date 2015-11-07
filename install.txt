@@ -10,10 +10,10 @@
     setup-chroot -m /mnt
 
   Install the base packages:
-    pan -A infra root=/mnt
+    pan -A base rootdir=/mnt
 
   Install additional groups if needed:
-    pan -A x11 supra gnome root=/mnt
+    pan -A x11 gnome gnome-extra rootdir=/mnt
 
   Setup the grub bootloader:
     grub-install --target=i386-pc --boot-directory=/mnt/boot /dev/sdX
