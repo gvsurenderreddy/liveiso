@@ -12,6 +12,7 @@ done
 
 mkdir -p $root/usr/bin
 install -v -m755 liveiso.sh $root/usr/bin/liveiso
+install -v -m755 liveiso-desktop.sh $root/usr/bin/liveiso-desktop
 
 for i in grub isolinux; do
 	mkdir -p $root/usr/share/liveiso/$i
