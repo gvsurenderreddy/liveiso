@@ -17,8 +17,8 @@ fi
 mkdir -p work/rootfs
 setup-chroot -m work/rootfs
 pan -A base rootdir=work/rootfs
-pan -a syslinux mtools gptfdisk parted shim \
-btrfs-progs iw wpa_supplicant rootdir=work/rootfs
+pan -a gnurama-scripts syslinux mtools gptfdisk parted shim \
+btrfs-progs iw wpa_supplicant openssh rootdir=work/rootfs
 setup-chroot -u work/rootfs
 
 mkdir -p work/rootfs/etc/systemd/system/getty@tty1.service.d
