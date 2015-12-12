@@ -17,8 +17,8 @@ fi
 mkdir -p work/rootfs
 setup-chroot -m work/rootfs
 pan -A base x11 gnome gnome-extra rootdir=work/rootfs
-pan -a enlightenment terminology firefox mesa-demos gnurama-scripts syslinux mtools \
-gptfdisk parted shim btrfs-progs iw wpa_supplicant openssh rootdir=work/rootfs
+pan -a enlightenment terminology chromium chromium-pepper-flash gnurama-scripts syslinux \
+mtools gptfdisk parted shim btrfs-progs iw wpa_supplicant openssh rootdir=work/rootfs
 setup-chroot -u work/rootfs
 
 chroot work/rootfs /bin/sh -c "echo 'root:root' | chpasswd"
@@ -29,7 +29,7 @@ chroot work/rootfs /bin/sh -c "ln -s /usr/share/zoneinfo/Europe/Stockholm /etc/l
 chroot work/rootfs /bin/sh -c "systemctl enable dhcpcd"
 chroot work/rootfs /bin/sh -c "systemctl enable gdm"
 chroot work/rootfs /bin/sh -c "echo \"For the installation instructions,\" >> /etc/motd"
-chroot work/rootfs /bin/sh -c "echo \"read the file /install.txt\" >> /etc/motd"
+chroot work/rootfs /bin/sh -c "echo \"read the /install.txt file\" >> /etc/motd"
 cp /usr/share/liveiso/install.txt work/rootfs
 
 mkdir -p work/live/LiveOS

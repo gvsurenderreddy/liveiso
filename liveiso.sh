@@ -27,7 +27,7 @@ chroot work/rootfs /bin/sh -c "echo \"KEYMAP=uk\" > /etc/vconsole.conf"
 chroot work/rootfs /bin/sh -c "ln -s /usr/share/zoneinfo/Europe/Stockholm /etc/localtime"
 chroot work/rootfs /bin/sh -c "systemctl enable dhcpcd"
 chroot work/rootfs /bin/sh -c "echo \"For the installation instructions,\" >> /etc/motd"
-chroot work/rootfs /bin/sh -c "echo \"read the file /root/install.txt\" >> /etc/motd"
+chroot work/rootfs /bin/sh -c "echo \"read the /root/install.txt file\" >> /etc/motd"
 cp /usr/share/liveiso/install.txt work/rootfs/root
 
 mkdir -p work/live/LiveOS
