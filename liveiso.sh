@@ -30,6 +30,9 @@ chroot work/rootfs /bin/sh -c "echo \"For the installation instructions,\" >> /e
 chroot work/rootfs /bin/sh -c "echo \"read the /root/install.txt file\" >> /etc/motd"
 cp /usr/share/liveiso/install.txt work/rootfs/root
 
+cp /var/cache/pan/arc/* work/rootfs/var/cache/pan/arc/
+cp -a /var/lib/pan/rcs work/var/lib/pan/rcs
+
 mkdir -p work/live/LiveOS
 truncate -s 32G work/live/LiveOS/rootfs.img
 mkfs.ext4 -O ^has_journal,^resize_inode -E lazy_itable_init=0 -m 0 -F work/live/LiveOS/rootfs.img
