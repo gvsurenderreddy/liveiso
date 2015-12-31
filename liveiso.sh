@@ -31,7 +31,7 @@ chroot work/rootfs /bin/sh -c "echo \"read the /root/install.txt file\" >> /etc/
 cp /usr/share/liveiso/install.txt work/rootfs/root
 
 cp /var/cache/pan/arc/* work/rootfs/var/cache/pan/arc/
-cp -a /var/lib/pan/rcs work/var/lib/pan/rcs
+cp -a /var/lib/pan/rcs work/rootfs/var/lib/pan/rcs
 
 mkdir -p work/live/LiveOS
 truncate -s 32G work/live/LiveOS/rootfs.img
