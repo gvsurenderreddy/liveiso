@@ -16,8 +16,8 @@ fi
 
 mkdir -p work/rootfs
 setup-chroot -m work/rootfs
-pan -A base x11 gnome gnome-extra rootdir=work/rootfs
-pan -a chromium chromium-pepper-flash gnurama-scripts syslinux mtools \
+pm -A base x11 gnome gnome-extra rootdir=work/rootfs
+pm -a chromium chromium-pepper-flash gnurama-scripts syslinux mtools \
 gptfdisk parted shim btrfs-progs iw wpa_supplicant openssh rootdir=work/rootfs
 setup-chroot -u work/rootfs
 
@@ -30,8 +30,8 @@ chroot work/rootfs /bin/sh -c "systemctl enable dhcpcd"
 chroot work/rootfs /bin/sh -c "systemctl enable gdm"
 cp /usr/share/liveiso/gdm/custom.conf work/rootfs/etc/gdm
 
-cp /var/cache/pan/arc/* work/rootfs/var/cache/pan/arc/
-cp -a /var/lib/pan/rcs work/rootfs/var/lib/pan/rcs
+cp /var/cache/pm/arc/* work/rootfs/var/cache/pm/arc/
+cp -a /var/lib/pm/rcs work/rootfs/var/lib/pm/rcs
 
 mkdir -p work/live/LiveOS
 truncate -s 32G work/live/LiveOS/rootfs.img
