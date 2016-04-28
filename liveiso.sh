@@ -16,8 +16,8 @@ fi
 
 mkdir -p work/rootfs
 setup-chroot -m work/rootfs
-pan -A base rootdir=work/rootfs
-pan -a gnurama-scripts syslinux mtools gptfdisk parted shim \
+pm -A base rootdir=work/rootfs
+pm -a gnurama-scripts syslinux mtools gptfdisk parted shim \
 btrfs-progs iw wpa_supplicant openssh rootdir=work/rootfs
 setup-chroot -u work/rootfs
 
@@ -30,8 +30,8 @@ chroot work/rootfs /bin/sh -c "echo \"For the installation instructions,\" >> /e
 chroot work/rootfs /bin/sh -c "echo \"read the /root/install.txt file\" >> /etc/motd"
 cp /usr/share/liveiso/install.txt work/rootfs/root
 
-cp /var/cache/pan/arc/* work/rootfs/var/cache/pan/arc/
-cp -a /var/lib/pan/rcs work/rootfs/var/lib/pan/rcs
+cp /var/cache/pm/arc/* work/rootfs/var/cache/pm/arc/
+cp -a /var/lib/pm/rcs work/rootfs/var/lib/pm/rcs
 
 mkdir -p work/live/LiveOS
 truncate -s 32G work/live/LiveOS/rootfs.img
