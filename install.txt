@@ -12,9 +12,6 @@
   Install the base packages:
     pm -A base rootdir=/mnt
 
-  Install additional groups if needed:
-    pm -A x11 gnome gnome-extra rootdir=/mnt
-
   Setup the grub bootloader:
     grub-install --target=i386-pc --boot-directory=/mnt/boot /dev/sdX
 
@@ -51,6 +48,6 @@
   Generate the grub configuration:
     grub-mkconfig -o /boot/grub/grub.cfg
 
-  Enable network manager(dhcpcd/NetworkManager):
-    systemctl enable NetworkManager
+  Enable dhcpcd:
+    systemctl enable dhcpcd
   
