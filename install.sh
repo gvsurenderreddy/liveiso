@@ -22,7 +22,4 @@ done
 mkdir -p $rootdir/usr/share/liveiso/systemd
 install -v -m644 override.conf $rootdir/usr/share/liveiso/systemd
 
-mkdir -p $rootdir/usr/share/liveiso/gdm
-install -v -m644 gdm-autologin.conf $rootdir/usr/share/liveiso/gdm/custom.conf
-
 install -v -m644 install.txt $rootdir/usr/share/liveiso

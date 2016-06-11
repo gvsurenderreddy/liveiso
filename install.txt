@@ -12,6 +12,9 @@
   Install the base packages:
     pm -A base rootdir=/mnt
 
+  Install additional packages if needed:
+    pm -a sway terminology enlightenment gedit firefox
+
   Setup the grub bootloader:
     grub-install --target=i386-pc --boot-directory=/mnt/boot /dev/sdX
 

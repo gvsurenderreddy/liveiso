@@ -16,9 +16,10 @@ fi
 
 mkdir -p work/rootfs
 setup-chroot -m work/rootfs
-pm -A base x11 gnome gnome-extra rootdir=work/rootfs
-pm -a chromium chromium-pepper-flash gnurama-scripts syslinux mtools \
-gptfdisk parted shim btrfs-progs iw wpa_supplicant openssh rootdir=work/rootfs
+pm -A base rootdir=work/rootfs
+pm -a sway terminology enlightenment gedit firefox \
+gnurama-scripts syslinux mtools gptfdisk parted shim \
+btrfs-progs iw wpa_supplicant openssh rootdir=work/rootfs
 setup-chroot -u work/rootfs
 
 chroot work/rootfs /bin/sh -c "echo 'root:root' | chpasswd"
@@ -27,8 +28,7 @@ chroot work/rootfs /bin/sh -c "echo 'liveuser:liveuser' | chpasswd"
 chroot work/rootfs /bin/sh -c "echo \"KEYMAP=uk\" > /etc/vconsole.conf"
 chroot work/rootfs /bin/sh -c "ln -s /usr/share/zoneinfo/Europe/Stockholm /etc/localtime"
 chroot work/rootfs /bin/sh -c "systemctl enable dhcpcd"
-chroot work/rootfs /bin/sh -c "systemctl enable gdm"
-cp /usr/share/liveiso/gdm/custom.conf work/rootfs/etc/gdm
+#chroot work/rootfs /bin/sh -c "systemctl enable sddm"
 
 cp /var/cache/pm/arc/* work/rootfs/var/cache/pm/arc/
 cp -a /var/lib/pm/rcs work/rootfs/var/lib/pm/rcs
