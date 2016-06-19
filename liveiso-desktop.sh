@@ -17,9 +17,9 @@ fi
 mkdir -p work/rootfs
 setup-chroot -m work/rootfs
 pm -A base gnome gnome-extra rootdir=work/rootfs
-pm -a sway terminology enlightenment chromium firefox \
-gnurama-scripts syslinux mtools gptfdisk parted shim \
-btrfs-progs iw wpa_supplicant openssh rootdir=work/rootfs
+pm -a chromium firefox gnurama-scripts syslinux \
+mtools gptfdisk parted shim btrfs-progs iw \
+wpa_supplicant openssh rootdir=work/rootfs
 setup-chroot -u work/rootfs
 
 chroot work/rootfs /bin/sh -c "echo 'root:root' | chpasswd"
