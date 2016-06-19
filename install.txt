@@ -12,8 +12,11 @@
   Install the base packages:
     pm -A base rootdir=/mnt
 
+  Install additional groups:
+    pm -A gnome gnome-extra rootdir=/mnt
+
   Install additional packages if needed:
-    pm -a sway terminology enlightenment gedit firefox
+    pm -a sway terminology enlightenment firefox
 
   Setup the grub bootloader:
     grub-install --target=i386-pc --boot-directory=/mnt/boot /dev/sdX
@@ -51,6 +54,9 @@
   Generate the grub configuration:
     grub-mkconfig -o /boot/grub/grub.cfg
 
-  Enable dhcpcd:
-    systemctl enable dhcpcd
+  Enable gnome display manager(gdm):
+    systemctl enable gdm
+
+  Enable network manager(NetworkManager):
+    systemctl enable NetworkManager
   
